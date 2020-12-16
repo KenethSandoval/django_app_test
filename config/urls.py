@@ -16,9 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from core.arp.views import myfirstview
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('prueba/', include('core.arp.urls'))
+    path('arp/', include('core.arp.urls'))
 ]

@@ -1,6 +1,6 @@
 from django.urls import path
-from core.arp.views import myfirstview
+from core.arp.views.categorias.views import category_list
 
 urlpatterns = [
-    path('uno/', myfirstview)
+    path('category/list/', category_list)
 ]

@@ -1,6 +1,6 @@
 from django.urls import path
-from core.arp.views.categorias.views import category_list
+from core.arp.views.categorias.views import *
 
 urlpatterns = [
-    path('category/list/', category_list)
+    path('category/list/', CategoryListView.as_view())
 ]

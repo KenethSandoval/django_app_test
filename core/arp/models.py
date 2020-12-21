@@ -4,7 +4,8 @@ from core.arp.choices import gender_choices
 from django.forms import model_to_dict
 
 class Category(models.Model):
-    name = models.CharField(max_length=150, unique=True)
+    name = models.CharField(max_length=150, unique=True, verbose_name="Nombre")
+    desc = models.CharField(max_length=500, null=True, blank=True, verbose_name='Descripcion')
 
     def __str__(self):
         return self.name

@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from core.arp.models import Category
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
+from django.urls import reverse_lazy
+
+from core.arp.models import Category
+from core.arp.forms import CategoryForm
+
 
 class CategoryListView(ListView):
     model = Category
@@ -26,3 +30,16 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Categorías'
         return context
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'category/create.html'
+    success_url = reverse_lazy('arp:category_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Crear una Categoria'
+        return context
+

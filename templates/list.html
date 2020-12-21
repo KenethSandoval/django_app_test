@@ -35,7 +35,7 @@
     </div>
 
     <div class="card-footer">
-        <button class="btn btn-primary btn-flat"><i class="fas fa-plus"></i>Nuevo registro</button>
+        <button class="btn btn-primary btn-flat btnTest"><i class="fas fa-plus"></i>Nuevo registro</button>
     </div>
 </div>
 {% endblock %}
@@ -46,6 +46,17 @@
 			$('#data').DataTable({
 				responsive: true,
 				autoWidth: false
+			});
+		});
+
+		$('.btnTest').on('click', function() {
+			$.ajax({
+				url: "/arp/category/list/",
+				type: 'POST',
+				data: {id: 1},
+				dataType: 'json'
+			}).done(function(data){
+				console.log(data);
 			});
 		});
 	</script>

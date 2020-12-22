@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from core.arp.models import Category
@@ -37,6 +37,19 @@ class CategoryCreateView(CreateView):
     form_class = CategoryForm
     template_name = 'category/create.html'
     success_url = reverse_lazy('arp:category_list')
+
+    def post(self, request, *args, **kwargs):
+       #print(request.POST)
+        form = CategoryForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+
+        self.object = None
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        return render(request, self.template_name, context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

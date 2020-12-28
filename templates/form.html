@@ -10,6 +10,7 @@
         </div>
         <div class="card-body">
             {% csrf_token %} 
+			<input type="hidden" name="action" value="{{ action }}">
 
 			{% for field in form.visible_fields %}
             <div class="form-group">
@@ -32,19 +33,19 @@
 		showConfirmButton: false,
 		timer: 3000
 	});
-	{% if form.errors %}
-	let errors = '';
-		{% for field in form %} 
-			{% for error in field.errors %}
-            	errors+= '{{ error }}\n';
-        	{% endfor %} 
-		{% endfor %}
 
-	Toast.fire({
-		icon: 'error',
-		title: errors
+	$('form').on('submit', function(e){
+		e.preventDefault();
+		var parameters = $(this).serializeArray();
+
+		$.ajax({
+			url: '{% url 'arp:category_create' %}',
+			type: 'POST',
+			data: parameters,
+			dataType: 'json'
+		}).done(function(data){
+			!data.hasOwnProperty('name') ? message_success('¡Guardado!') : message_error(data.name)
+		});
 	});
-	{% endif %}
-
 </script>
 {% endblock %}

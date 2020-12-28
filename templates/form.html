@@ -39,7 +39,7 @@
 		var parameters = $(this).serializeArray();
 
 		$.ajax({
-			url: '{% url 'arp:category_create' %}',
+			url: window.location.pathname,
 			type: 'POST',
 			data: parameters,
 			dataType: 'json'

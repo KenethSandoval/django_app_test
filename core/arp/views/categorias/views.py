@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse, HttpResponseRedirect
@@ -100,4 +100,16 @@ class CategoryUpdateView(UpdateView):
         context['entity'] = 'Categorias'
         context['list_url'] = reverse_lazy('arp:category_list')
         context['action'] = 'edit'
+        return context
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    template_name = 'category/delete.html'
+    success_url = reverse_lazy('arp:category_list')
+ 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminar una Categoria'
+        context['entity'] = 'Categorias'
+        context['list_url'] = reverse_lazy('arp:category_list')
         return context
